@@ -24,10 +24,10 @@ checkIfZero c d = if d == 0 then c + 1 else c
 main = do
   contents <- readFile "day1.txt"
   let ls = lines contents
-  print (rotateDial 0 50 (map stringToRotation ls))
+  print (rotateDial 0 50 (concatMap stringToRotation ls))
 
-stringToRotation :: String -> Rotation
+stringToRotation :: String -> [Rotation]
 stringToRotation cs = case head cs of
-  'R' -> (R, read (tail cs) :: Int)
-  'L' -> (L, read (tail cs) :: Int)
+  'R' -> replicate (read (tail cs) :: Int) (R, 1)
+  'L' -> replicate (read (tail cs) :: Int) (L, 1)
   _ -> undefined
