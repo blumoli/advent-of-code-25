@@ -1,6 +1,6 @@
 main = do
-  contents <- readFile "day2test.txt"
-  print $ concatMap (idsToInts . splitIds) (splitRanges contents)
+  contents <- readFile "day2.txt"
+  print $ sum (filter isRepeating (concatMap (idsToInts . splitIds) (splitRanges contents)))
 
 splitRanges :: String -> [String]
 splitRanges s = case break (== ',') s of
@@ -15,5 +15,5 @@ splitIds s = case break (== '-') s of
 idsToInts :: (String, String) -> [Int]
 idsToInts (s, s') = [read s :: Int .. read s' :: Int]
 
-isRepeating :: Int -> Int -> Bool
-isRepeating i l = show i == undefined
+isRepeating :: Int -> Bool
+isRepeating i = ((2 * length (show i) `div` 2) == (2 * (length (show i) `div` 2))) && (show i == concat (replicate 2 (take (length (show i) `div` 2) (show i))))
